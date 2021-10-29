@@ -18,6 +18,11 @@ public class PlayerControler : MonoBehaviour {
     // variable pour la vague
     Wave WaveScript;
     bool detect = true;
+    // variables pour le tir Alien
+    public GameObject AlienBullet;
+    bool alienCanShoot = true;
+    int layerDefault;
+    public float AlienShootRate = 2f;
 
     private int score = 0;
     // getter setter pour pouvoir modifier le score
@@ -42,6 +47,7 @@ public class PlayerControler : MonoBehaviour {
         ejectPosition = transform.Find("Eject");
         TxtScore = GameObject.Find("TxtScore").GetComponent<Text>();
         WaveScript = GameObject.Find("Wave").GetComponent<Wave>();
+        layerDefault = LayerMask.GetMask("Default");
     }
 	
     // actions du jeu
@@ -49,7 +55,7 @@ public class PlayerControler : MonoBehaviour {
 	void Update () {
         MovePlayer();
         PlayerShoot();
-
+        AlienShoot();
     }
 
     // déplacement de droite à gauche, avec limitation du cadre de jeu
@@ -76,7 +82,7 @@ public class PlayerControler : MonoBehaviour {
     //Entre dans le trigger du player
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Alien"))
+        if (collision.CompareTag("Alien") && detect || collision.CompareTag("BulletAlien"))
         {
             detect = false;
             StartCoroutine(AlienKillPlayer());
@@ -109,4 +115,32 @@ public class PlayerControler : MonoBehaviour {
         GetComponent<Animator>().SetTrigger("normal");//Lance l'animation dans l'animator
         tir = true;//peut tirer
     }
+    
+    // Tir des Aliens
+    public void AlienShoot()
+    {
+        Debug.DrawRay(transform.position, Vector2.up * 5);
+        // Rayon qui part du Player vers les Aliens 
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, Mathf.Infinity, layerDefault);
+
+        // si le rayon touche un ALien
+        if (hit.collider != null)
+        {
+            // si le rayon touche un Alien et qu'il peut tirer, on instancie le tir Alien 
+            if (hit.collider.CompareTag("Alien") && alienCanShoot)
+            {
+                StartCoroutine(Pause()); // temporisation du tir Alien
+                Instantiate(AlienBullet, hit.point, Quaternion.identity);
+            }
+        }
+    }
+
+    // Coroutine pour le tir Alien
+    IEnumerator Pause()
+    {
+        alienCanShoot = false;
+        yield return new WaitForSeconds(AlienShootRate);
+        alienCanShoot = true;
+    }
+
 }

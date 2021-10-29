@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosionAlien : MonoBehaviour {
 
     // variables
-    SpriteRenderer sr;
+    //SpriteRenderer sr;
     // pour enregistrer le son
     AudioSource audioSource;
     // delai avant destruction de l'objet
@@ -14,7 +14,7 @@ public class ExplosionAlien : MonoBehaviour {
     private void Awake()
     {
         // Récupère les components
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
     }
 
