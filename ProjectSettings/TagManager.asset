@@ -8,6 +8,8 @@ TagManager:
   - Bumper
   - Slot
   - BulletAlien
+  - Ufo
+  - Destroy
   layers:
   - Default
   - TransparentFX

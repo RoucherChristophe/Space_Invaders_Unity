@@ -38,6 +38,14 @@ public class BulletPlayer : MonoBehaviour {
             playercontroler.Score += 50;
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.CompareTag("Ufo"))
+        {
+            Destroy(collision.gameObject);
+            Instantiate(ExplosionPrefab, collision.transform.position, Quaternion.identity);
+            GameObject.Find("Wave").GetComponent<Wave>().Reste_alien += 1;
+            playercontroler.Score += 200;
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

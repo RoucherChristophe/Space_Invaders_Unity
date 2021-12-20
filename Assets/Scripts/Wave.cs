@@ -114,6 +114,8 @@ public class Wave : MonoBehaviour {
             print("Fini!!!!!");
             // on arrète toutes les coroutines
             StopAllCoroutines();
+            // on stop la création d'UFO
+            GameObject.Find("SpawnPointUfo").GetComponent<SpawnUfo>().UfoStopSpawn();
         }
     }
 

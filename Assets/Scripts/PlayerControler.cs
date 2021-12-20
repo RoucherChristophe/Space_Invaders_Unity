@@ -50,8 +50,7 @@ public class PlayerControler : MonoBehaviour {
         layerDefault = LayerMask.GetMask("Default");
     }
 	
-    // actions du jeu
-    
+    // actions du jeux   
 	void Update () {
         MovePlayer();
         PlayerShoot();
@@ -61,12 +60,9 @@ public class PlayerControler : MonoBehaviour {
     // déplacement de droite à gauche, avec limitation du cadre de jeu
     void MovePlayer()
     {
-        if (tir)
-        {
             PositionPlayer.x += Input.GetAxis("Horizontal") * Time.deltaTime * speed;
             PositionPlayer.x = Mathf.Clamp(PositionPlayer.x, -limitx, limitx);
             transform.position = PositionPlayer;
-        }      
     }
 
     // tir du "Player"
