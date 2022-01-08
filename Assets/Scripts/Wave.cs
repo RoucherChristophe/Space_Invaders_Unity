@@ -138,4 +138,5 @@ public class Wave : MonoBehaviour {
         StartCoroutine(MooveWave());//Déplace la vague
         playerController.InitPlayer();//affichage du player
     }
+
 }
